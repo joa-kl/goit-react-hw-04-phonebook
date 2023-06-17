@@ -1,31 +1,39 @@
-import { Component } from "react";
+import { useState } from "react";
 import css from "./ContactForm.module.css"
 
-export class ContactForm extends Component {
-    state = {
-        name: '',
-        number: '',
-    };
+const ContactForm = ({onSubmit}) => {
+    const [name, setName] = useState("");
+    const [number, setNumber] = useState("");
 
-    handleChange = evt => {
-        const { name, value } = evt.target;
-        this.setState({ [name]: value });
+   const handleChange = evt => {
+       const { name, value } = evt.target;
+        switch (name) {
+            case 'name':
+            setName(value);
+            break;
+
+            case 'number':
+            setNumber(value);
+            break;
+
+            default:
+            return;   
+        }
     };
     
-    handleFormSubmit = evt => {
+    const handleFormSubmit = evt => {
         evt.preventDefault();
-        const { name, number } = this.state;
-        const form = evt.currentTarget;
-        this.props.onSubmit({ name, number});
-        form.reset();
+        onSubmit(name, number);
+        resetInput();
     };
 
-    render() {
-    
-        const { name, number } = this.state;
+    const resetInput = () => {
+        setName(''); 
+        setNumber('');
+    };
 
         return (
-            <form onSubmit={this.handleFormSubmit} className={css.form}>
+            <form onSubmit={handleFormSubmit} className={css.form}>
                 <label className={css.label}>Name</label>
                     <input
                         type="text"
@@ -35,7 +43,7 @@ export class ContactForm extends Component {
                         // id={this.loginInputId}
                         placeholder="Enter name"
                         value={name}
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                         className={css.input}
                         required
                 />
@@ -47,7 +55,7 @@ export class ContactForm extends Component {
                         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                         placeholder="Enter phone number"
                         value={number}
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                         className={css.input}
                         required
                         />
@@ -57,4 +65,5 @@ export class ContactForm extends Component {
         )
     
     }
-}
+
+export default ContactForm;

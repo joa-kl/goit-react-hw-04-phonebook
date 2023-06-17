@@ -1,7 +1,7 @@
 import css from './App.module.css';
 // import { Component } from "react";
 import { nanoid } from 'nanoid';
-import { ContactForm } from "./ContactForm/ContactForm";
+import ContactForm  from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
 import { useState } from 'react';
@@ -14,24 +14,26 @@ const App = () => {
     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ],);
+
   const [filter, setFilter] = useState("");
 
   const handleFilterChange = evt => {
     setFilter(evt.currentTarget.value);
   };
 
-  const handleContactFormSubmit = evt => {
-    const id = nanoid();
-    const name = evt.name;
-    const number = evt.number;
+  const handleContactFormSubmit = (name, number) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    }
+  
     const contactsLists = [...contacts];
     const doesExist = contactsLists.findIndex(contact => name === contact.name) !== -1;
 
     doesExist
       ? alert(`${name} is already in contacts.`)
-      : contactsLists.push({ id, name, number });
-    
-    setContacts(contactsLists);
+      : setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
   const handleContactDelete = evt => {
@@ -39,9 +41,10 @@ const App = () => {
   };
 
   const getFilteredContacts = () => {
-    const filterContactsList = filter.toLowerCase();
+    const filterContactsList = filter.toString().toLowerCase();
     return contacts.filter(({ name }) =>
-      name.toLowerCase()
+      name
+        .toLowerCase()
         .includes(filterContactsList)
     );
   };
