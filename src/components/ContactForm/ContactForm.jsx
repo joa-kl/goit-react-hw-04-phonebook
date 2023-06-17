@@ -5,21 +5,14 @@ const ContactForm = ({onSubmit}) => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
 
-   const handleChange = evt => {
-       const { name, value } = evt.target;
-        switch (name) {
-            case 'name':
+    const handleChange = evt => {
+        const { name, value } = evt.target;
+        if (name === 'name') {
             setName(value);
-            break;
-
-            case 'number':
+        } else if (name === 'number') {
             setNumber(value);
-            break;
-
-            default:
-            return;   
         }
-    };
+    };       
     
     const handleFormSubmit = evt => {
         evt.preventDefault();
