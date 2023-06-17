@@ -15,64 +15,36 @@ const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ],);
   const [filter, setFilter] = useState("");
-  //  state = {
-  //   contacts: 
-  //   filter: '',
-  // };
-
-  // componentDidMount() {
-  //   const contacts = localStorage.getItem('contacts');
-  //   const parsedContacts = JSON.parse(contacts);
-  //   if (parsedContacts) {
-  //     this.setState({ contacts: parsedContacts });
-  //   }
-  // }
-
-  // componentDidUpdate(_, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
 
   const handleFilterChange = evt => {
-    const { name, value } = evt.target;
-    this.setState({ [name]: value });
+    setFilter(evt.currentTarget.value);
   };
 
   const handleContactFormSubmit = evt => {
     const id = nanoid();
     const name = evt.name;
     const number = evt.number;
-    const contactsLists = [...this.state.contacts];
+    const contactsLists = [...contacts];
     const doesExist = contactsLists.findIndex(contact => name === contact.name) !== -1;
 
     doesExist
       ? alert(`${name} is already in contacts.`)
       : contactsLists.push({ id, name, number });
     
-    this.setState({ contacts: contactsLists });
+    setContacts(contactsLists);
   };
 
   const handleContactDelete = evt => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== evt),
-    }));
-    // return contactToBeRemoved;
-    // localStorage.getItem('contactList');
-
+    setContacts(contacts.filter(contact => contact.id !== evt));
   };
 
   const getFilteredContacts = () => {
-    const filterContactsList = setFilter(contacts => {
-      return contacts.name
-        .toLowerCase()
-        .includes(filter.toLowerCase());
-    });
-    return filterContactsList;
+    const filterContactsList = filter.toLowerCase();
+    return contacts.filter(({ name }) =>
+      name.toLowerCase()
+        .includes(filterContactsList)
+    );
   };
-  
-   
-    // const { filter } = this.state;
 
     return (
       <div className={css.container}>
