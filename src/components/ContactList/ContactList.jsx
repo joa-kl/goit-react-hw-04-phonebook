@@ -1,5 +1,4 @@
 import propTypes from 'prop-types';
-// const { Component } = require("react");
 import css from './ContactList.module.css'
 
 export const ContactList = ({ contacts, onContactDelete }) => (
