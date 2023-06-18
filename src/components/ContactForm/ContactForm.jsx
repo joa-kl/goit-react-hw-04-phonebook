@@ -21,8 +21,8 @@ const ContactForm = ({onSubmit}) => {
     };
 
     const resetInput = () => {
-        setName(''); 
-        setNumber('');
+        setName(""); 
+        setNumber("");
     };
 
         return (
