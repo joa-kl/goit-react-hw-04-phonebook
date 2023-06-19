@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     const localData = localStorage.getItem('contacts');
     setContacts(localData ? JSON.parse(localData) : []);
-  }, []);
+  },[]);
   
    useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -25,11 +25,6 @@ const App = () => {
 
 
    const [filter, setFilter] = useState("");
-  
-  // useEffect(() => {
-  //   setContacts(prevContact => prevContact + JSON.parse(localStorage.getItem(contacts)));
-  // }, [contacts]);
-  
   
   const handleFilterChange = evt => {
     setFilter(evt.currentTarget.value);
