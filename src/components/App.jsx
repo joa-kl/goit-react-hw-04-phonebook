@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import ContactForm  from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const App = () => {
 
@@ -12,10 +12,25 @@ const App = () => {
     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],);
+  ]);
+ 
+  useEffect(() => {
+    const localData = localStorage.getItem('contacts');
+    return localData ? JSON.parse(localData) : [];
+  }, []);
+  
+   useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-  const [filter, setFilter] = useState("");
 
+   const [filter, setFilter] = useState("");
+  
+  // useEffect(() => {
+  //   setContacts(prevContact => prevContact + JSON.parse(localStorage.getItem(contacts)));
+  // }, [contacts]);
+  
+  
   const handleFilterChange = evt => {
     setFilter(evt.currentTarget.value);
   };
